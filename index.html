@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>EduPlex – Exam Countdown & CGPA Calculator for DIU SWE Students</title>
+   <link rel="icon" type="image/x-icon" href="favicon.ico">
+
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- SEO Meta Description -->
+  <meta name="description" content="EduPlex helps Daffodil International University SWE students with exam countdown, CGPA calculator, notes, and study resources for better preparation.">
+
+  <!-- Keywords -->
+  <meta name="keywords" content="EduPlex, DIU, Daffodil International University, SWE, exam countdown, cgpa calculator, DIU notes, DIU study resources, DIU question bank">
+
+  <!-- Author -->
+  <meta name="author" content="EduPlex Team">
+
+  <!-- Open Graph (For social sharing like Facebook, LinkedIn) -->
+  <meta property="og:title" content="EduPlex – Exam Countdown & CGPA Calculator">
+  <meta property="og:description" content="Exam schedule countdown & CGPA calculator for DIU SWE students. Stay prepared with EduPlex.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://eduplex.unleft.space/">
+  <meta property="og:image" content="https://eduplex.unleft.space/logo.png">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="EduPlex – Exam Countdown & CGPA Calculator">
+  <meta name="twitter:description" content="Stay exam-ready with EduPlex – DIU SWE students’ CGPA calculator & countdown timer.">
+  <meta name="twitter:image" content="https://eduplex.unleft.space/logo.png">
+    <!-- Google Tag Manager -->
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-K4Q52BT6');</script>
+    <!-- End Google Tag Manager -->
+  <!-- Canonical URL -->
+  <link rel="canonical" href="https://eduplex.unleft.space/">
+    <title>EduPlex - Simplify Learning. Master Software.</title>
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/index.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="hamburger">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+            <div class="nav-logo">
+                <a href='/'><img src="images/eduplex logo.png" alt="eduplexlogo"></a>
+            </div>
+            <div class="nav-icons">
+                <a href='/changelog'><i class="fas fa-bell"></i></a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Sidebar Menu -->
+    <div class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <button class="sidebar-close" id="sidebar-close">&times;</button>
+        </div>
+        <div class="sidebar-content">
+            <div class="menu-section">
+                <div class="menu-item menu-parent">
+                    <span class="menu-text">Study Materials</span>
+                    <span class="menu-arrow">▼</span>
+                </div>
+                <div class="submenu">
+                    <div class="menu-item">
+                        <a class='menu-text' href='/batch-45-1st-semester'>Batch-45</a>
+                    </div>
+                </div>
+                <div class="submenu">
+                    <div class="menu-item">
+                        <a class='menu-text' href='/suggestion'>Final Suggestions</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="menu-section">
+                <div class="menu-item menu-parent">
+                    <span class="menu-text">Questions & answers of previous year exams</span>
+                    <span class="menu-arrow">▼</span>
+                </div>
+                <div class="submenu">
+                    <div class="menu-item">
+                        <a class='menu-text' href='/batch-43-1st-semester'>Batch-43</a>
+                    </div>
+                    <div class="menu-item">
+                        <a class='menu-text' href='/batch-44-1st-semester'>Batch-44</a>
+                    </div>
+                    <div class="menu-item">
+                        <a class='menu-text' href='/batch-45-1st-semester-q&a'>Batch-45 Q&A</a>
+                    </div>
+                </div>
+            </div>
+            <div class="menu-section">
+                <div class="menu-item menu-parent menu-link">
+                   <a class='menu-text' href='/suggestion'>Suggestions</a> 
+                </div>
+            </div>
+            <div class="menu-section">
+                <div class="menu-item menu-parent menu-link">
+                   <a href="https://drive.google.com/drive/folders/1DVb308dCpR83c3_ALbqXQjK7Dc9UnQUo?usp=sharing" target="_blank" class="menu-text">Seat Plan for the Final Exam</a> 
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Header Section with Countdown -->
+    <header>
+        <div class="header-bg"></div>
+        <div class="container header-content">
+            <div class="hero-left">
+                <h1 class="logo">EduPlex</h1>
+                <p class="tagline">Simplify Learning. Master Your Courses.</p>
+                <p class="welcome-text">
+                    EduPlex is your comprehensive learning platform designed specifically for the 45th batch of Software
+                    Engineering students of Daffodil International University.
+                    Access course materials, previous papers, and useful tools to excel in your academic journey.
+                </p>
+                <div class="typing-text" id="typing-text"></div>
+                <div class="batch-dropdown">
+                    <label for="batch-select">Choose your batch</label>
+                    <select id="batch-select" class="batch-select">
+                        <option value="">Select Batch</option>
+                        <option value="45">Batch - 45</option>
+                    </select>
+                </div>
+            </div>
+            <div class="hero-right">
+                <div class="countdown-container">
+                    <h3 class="countdown-title">Final Exam Countdown</h3>
+                    <p class="countdown-subtitle">Prepare like a Pro. Your exam begins in...</p>
+                    <div class="countdown" id="countdown">
+                        <div class="countdown-item">
+                            <div class="countdown-number" id="days">00</div>
+                            <div class="countdown-label">Days</div>
+                        </div>
+                        <div class="countdown-item">
+                            <div class="countdown-number" id="hours">00</div>
+                            <div class="countdown-label">Hours</div>
+                        </div>
+                        <div class="countdown-item">
+                            <div class="countdown-number" id="minutes">00</div>
+                            <div class="countdown-label">Minutes</div>
+                        </div>
+                        <div class="countdown-item">
+                            <div class="countdown-number" id="seconds">00</div>
+                            <div class="countdown-label">Seconds</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="exam-routine-dropdown">
+                    <label for="exam-routine-select">Check your exam routine</label>
+                    <select id="exam-routine-select" class="exam-routine-select">
+                        <option value="">Select Exam Type</option>
+                        <option value="mid">Mid</option>
+                        <option value="final">Final</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- CG Calculator Section -->
+    <section id="calculator">
+        <div class="container">
+            <h2 class="section-title">CGPA Calculator</h2>
+            <div class="calculator-container">
+                <div class="calculator-form">
+                    <div class="form-group" style="grid-column: span 2;">
+                        <h3 class="result-title">CGPA per subject</h3>
+                    </div>
+                    <div class="form-group">
+                        <label for="final-marks">Final (40%)</label>
+                        <input type="number" id="final-marks" min="0" max="40" placeholder="Enter final marks">
+                        <div class="error-message" id="final-error"></div>
+                    </div>
+                    <div class="form-group">
+                        <label for="mid-marks">Midterm Marks (25%)</label>
+                        <input type="number" id="mid-marks" min="0" max="25" placeholder="Enter mid marks">
+                        <div class="error-message" id="mid-error"></div>
+                    </div>
+                    <div class="form-group">
+                        <label for="presentation">Presentation (8%)</label>
+                        <input type="number" id="presentation" min="0" max="8" placeholder="Enter presentation marks">
+                        <div class="error-message" id="presentation-error"></div>
+                    </div>
+                    <div class="form-group">
+                        <label for="assignment">Assignment (5%)</label>
+                        <input type="number" id="assignment" min="0" max="5" placeholder="Enter assignment marks">
+                        <div class="error-message" id="assignment-error"></div>
+                    </div>
+                    <div class="form-group">
+                        <label for="ct-marks">Class Test (15%)</label>
+                        <input type="number" id="ct-marks" min="0" max="15" placeholder="Enter CT marks">
+                        <div class="error-message" id="ct-error"></div>
+                    </div>
+                    <div class="form-group">
+                        <label for="attendance">Attendance (7%)</label>
+                        <input type="number" id="attendance" min="0" max="7" placeholder="Enter attendance marks">
+                        <div class="error-message" id="attendance-error"></div>
+                    </div>
+                    <div class="form-group" style="grid-column: span 2;">
+                        <button class="btn" id="calculate-btn">Calculate</button>
+                    </div>
+                </div>
+
+                <div class="calculator-result" id="result">
+                    <h3 class="result-title">Your Result</h3>
+
+                    <div class="result-item">
+                        <div class="result-label">Total Current Marks</div>
+                        <div class="result-value" id="current-total">--</div>
+                    </div>
+
+                    <div class="result-item">
+                        <div class="result-label">Current Grade</div>
+                        <div class="result-value" id="grade">--</div>
+                    </div>
+                    <div class="result-item">
+                        <div class="result-label">Current CGPA</div>
+                        <div class="result-value" id="cgpa">--</div>
+                    </div>
+                    <div class="result-item">
+                        <div class="result-label">Message</div>
+                        <div class="result-value" id="analysis">Enter your marks to see your potential</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    <div class="container">
+        <div class="calculator-container">
+            <div class="calculator-form" id="semester-form">
+                <div style="grid-column: span 2;">
+                    <h3 class="result-title">Total CGPA for the Current Semester</h3>
+                </div>
+                
+                <!-- Bangladesh Studies -->
+                <div class="form-group">
+                    <label for="bns-marks">Bangladesh Studies (BNS) - 3 Credits</label>
+                    <input type="number" id="bns-marks" min="0" max="100" step="0.1" placeholder="Enter marks (0-100)">
+                    <div class="error-message" id="bns-error"></div>
+                </div>
+                
+                <!-- Computer Fundamentals -->
+                <div class="form-group">
+                    <label for="cf-marks">Computer Fundamentals (CF) - 3 Credits</label>
+                    <input type="number" id="cf-marks" min="0" max="100" step="0.1" placeholder="Enter marks (0-100)">
+                    <div class="error-message" id="cf-error"></div>
+                </div>
+                
+                <!-- Computer Fundamentals Lab -->
+                <div class="form-group">
+                    <label for="cfl-marks">Computer Fundamentals Lab (CFL) - 1 Credit</label>
+                    <input type="number" id="cfl-marks" min="0" max="100" step="0.1" placeholder="Enter marks (0-100)">
+                    <div class="error-message" id="cfl-error"></div>
+                </div>
+                
+                <!-- Introduction to Software Engineering -->
+                <div class="form-group">
+                    <label for="ise-marks">Intro to Software Eng (ISE) - 3 Credits</label>
+                    <input type="number" id="ise-marks" min="0" max="100" step="0.1" placeholder="Enter marks (0-100)">
+                    <div class="error-message" id="ise-error"></div>
+                </div>
+                
+                <!-- English - 1 -->
+                <div class="form-group">
+                    <label for="e1-marks">English - 1 (E-1) - 3 Credits</label>
+                    <input type="number" id="e1-marks" min="0" max="100" step="0.1" placeholder="Enter marks (0-100)">
+                    <div class="error-message" id="e1-error"></div>
+                </div>
+
+                <div class="form-group" style="grid-column: span 2;">
+                    <button class="btn" id="calculate-semester-btn" type="button">Calculate Total CGPA</button>
+                </div>
+            </div>
+
+            <div class="calculator-result" id="semester-result">
+                <h3 class="result-title">Your Semester Result</h3>
+                <div class="result-item">
+                    <div class="result-label">Total Credit Points</div>
+                    <div class="result-value" id="semester-total-credits">13</div>
+                </div>
+                <div class="result-item">
+                    <div class="result-label">Semester CGPA</div>
+                    <div class="result-value" id="semester-cgpa-value">--</div>
+                </div>
+                <div class="result-item">
+                    <div class="result-label">Semester Grade</div>
+                    <div class="result-value" id="semester-grade">--</div>
+                </div>
+                <div class="result-item">
+                    <div class="result-label">Message</div>
+                    <div class="result-value" id="semester-message">Enter your marks to calculate your semester CGPA</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </section>
+
+    <!-- Footer -->
+    <footer id="footer">
+        <div class="footer-container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <div class="footer-logo-row">
+                        <img src="images/eduplex logo short.png" alt="Logo" loading="lazy" />
+                        <h3>EduPlex</h3>
+                    </div>
+                    <p>EduPlex is your comprehensive learning platform designed specifically for the 45th batch of
+                        Software Engineering students of Daffodil International University.
+                        Access course materials, previous papers, and useful tools to excel in your academic journey.
+                    </p>
+                </div>
+
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li>
+                            <h4>Study Materials:</h4>
+                        </li>
+                        <li><a href='/batch-45-1st-semester'>Batch - 45</a></li>
+                        <li>
+                            <h4>Questions & answers of previous year exams:</h4>
+                        </li>
+                        <li><a href='/batch-43-1st-semester'>Batch-43</a></li>
+                        <li><a href='/batch-44-1st-semester'>Batch-44</a></li>
+                        <li><a href='/batch-45-1st-semester-q&a'>Batch-45 Q&A</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Support</h3>
+                    <ul>
+                        <li><a href='/about'>About Us</a></li>
+                        <li><a href='/contact'>Contact Us</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <h3>Eduplex</h3>
+                <p>All rights reserved.</p>
+                <p>&copy;2025 | A project of <a href="https://unleft.space/" target="_blank">UNLEFT</a></p>
+            </div>
+        </div>
+    </footer>
+    <script src="js/main.js"></script>
+    <script src="js/index.js"></script>
+</body>
+</html>
