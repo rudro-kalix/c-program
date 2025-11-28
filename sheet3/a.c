@@ -12,4 +12,3 @@ int main(){
     printf("%lld\n", (sum < 0) ? -1 * sum : sum);
     return 0;
 }
-//done
