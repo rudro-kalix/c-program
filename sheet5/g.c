@@ -1,23 +1,19 @@
 #include <stdio.h>
 
-long long power(int x, int p) {
-    long long r = 1;
-    for (int i = 0; i < p; i++) r *= x;
-    return r;
-}
-
-long long solve(int x, int n) {
-    long long s = 0;
-    for (int i = 0; i <= n; i += 2) {
-        if (i == 0) s += (power(x, 0) - 1);
-        else s += power(x, i);
+void findMinMax(int n, int a[], int *mn, int *mx) {
+    *mn = a[0];
+    *mx = a[0];
+    for (int i = 1; i < n; i++) {
+        if (a[i] < *mn) *mn = a[i];
+        if (a[i] > *mx) *mx = a[i];
     }
-    return s;
 }
 
 int main() {
-    int X, N;
-    scanf("%d %d", &X, &N);
-    printf("%lld", solve(X, N));
+    int n, a[1000], mn, mx;
+    scanf("%d", &n);
+    for (int i = 0; i < n; i++) scanf("%d", &a[i]);
+    findMinMax(n, a, &mn, &mx);
+    printf("%d %d", mn, mx);
     return 0;
 }

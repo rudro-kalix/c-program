@@ -21,3 +21,4 @@ int main() {
     printf("%lld", solve(X, N));
     return 0;
 }
+//directsub

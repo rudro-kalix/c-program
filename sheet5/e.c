@@ -13,3 +13,4 @@ int main() {
     printf("%d %d", X, Y);
     return 0;
 }
+//directsub

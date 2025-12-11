@@ -13,3 +13,4 @@ int main() {
     printNumbers(N);
     return 0;
 }
+//directsub

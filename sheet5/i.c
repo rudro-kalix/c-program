@@ -1,6 +1,8 @@
 #include <stdio.h>
 
-void swapRows(int n, int a[][500], int x, int y) {
+int a[500][500];
+
+void swapRows(int n, int x, int y) {
     for (int j = 0; j < n; j++) {
         int t = a[x][j];
         a[x][j] = a[y][j];
@@ -8,7 +10,7 @@ void swapRows(int n, int a[][500], int x, int y) {
     }
 }
 
-void swapCols(int n, int a[][500], int x, int y) {
+void swapCols(int n, int x, int y) {
     for (int i = 0; i < n; i++) {
         int t = a[i][x];
         a[i][x] = a[i][y];
@@ -18,15 +20,16 @@ void swapCols(int n, int a[][500], int x, int y) {
 
 int main() {
     int n, x, y;
-    int a[500][500];
     scanf("%d %d %d", &n, &x, &y);
-    x--; y--;
+    x--; 
+    y--;
+
     for (int i = 0; i < n; i++)
         for (int j = 0; j < n; j++)
             scanf("%d", &a[i][j]);
 
-    swapRows(n, a, x, y);
-    swapCols(n, a, x, y);
+    swapRows(n, x, y);
+    swapCols(n, x, y);
 
     for (int i = 0; i < n; i++) {
         for (int j = 0; j < n; j++) {
