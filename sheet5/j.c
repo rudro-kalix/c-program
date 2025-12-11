@@ -14,3 +14,6 @@ int main() {
     printf("%.6f", average(n, a));
     return 0;
 }
+
+
+//pushed
