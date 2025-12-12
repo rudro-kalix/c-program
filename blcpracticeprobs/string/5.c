@@ -5,7 +5,7 @@ int main() {
     gets(s1);
     gets(s2);
     while(s1[i]!='\0') i++;
-    while(s2[j]!='\0'){
+    while(s2[j]!='\0'){a
         s1[i]=s2[j];
         i++; j++;
     }
