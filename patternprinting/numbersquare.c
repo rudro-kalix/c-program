@@ -4,15 +4,13 @@ int main (){
 int v,l;
  printf("enter number of lines : ");
  scanf("%d",&l);
-    printf("enter a value : ");
-    scanf("%d",&v);
- 
+
+ int num=1;
     for (int i=1; i<=l; i++){
        
-        for(int j=1;j<=v;j++){
-
-
-            printf("%d",j);
+        for(int j=1;j<=l;j++){
+            printf("%d",num);
+            num++;
         }
 
         printf("\n");
