@@ -12,10 +12,6 @@ int v,l;
         for(int j=1;j<=v;j++){
 
 
-
-
-            
-
             printf("%d",j);
         }
 
