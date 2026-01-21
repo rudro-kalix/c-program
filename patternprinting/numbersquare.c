@@ -1,17 +1,19 @@
 #include <stdio.h>
 
 int main (){
-int v,r;
- printf("enter row : ");
- scanf("%d",&r);
+int v,l;
+ printf("enter number of lines : ");
+ scanf("%d",&l);
     printf("enter a value : ");
     scanf("%d",&v);
  
-    for (int i=1; i<=r; i++);{
+    for (int i=1; i<=l; i++);{
+       
         for(int j=1;j<=v;j++){
-            printf("%d",j);
+            printf("1");
         }
-printf("\n");
+
+        printf("\n");
 
     }
 
