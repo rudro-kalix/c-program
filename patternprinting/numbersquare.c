@@ -7,14 +7,19 @@ int v,l;
     printf("enter a value : ");
     scanf("%d",&v);
  
-    for (int i=1; i<=l; i++);{
+    for (int i=1; i<=l; i++){
        
         for(int j=1;j<=v;j++){
-            printf("1");
+
+
+
+
+            
+
+            printf("%d",j);
         }
 
         printf("\n");
-
     }
 
 
