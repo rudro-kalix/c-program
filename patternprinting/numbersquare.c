@@ -1,7 +1,7 @@
 #include <stdio.h>
 
 int main (){
-int v,l;
+int l;
  printf("enter number of lines : ");
  scanf("%d",&l);
 
