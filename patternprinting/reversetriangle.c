@@ -4,6 +4,6 @@ int main (){
 
 
 
-    retu
-    
+    return 0;
+
 }
