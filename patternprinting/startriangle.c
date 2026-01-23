@@ -2,7 +2,7 @@
 
 int main(){
 int v,i,j;
-    printf("Enter value of triangle");
+    printf("Enter value of triangle: ");
     scanf("%d",&v);
 
     for( i=1; i<=v; i++){
