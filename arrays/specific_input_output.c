@@ -11,17 +11,20 @@ int main (){
         scanf("%d", &arr[i]);
 
     }
-
+int p=1, f=1;
     for( int i=0; i <=5; i ++){
 
         if (arr[i]>33){
 
             printf("Passed sudent number is %d and his mark:%d \n",i+1,arr[i]);
-
+            p++;
         }
+
+        else f++;
 
     }
 
-
+printf("total passed: %d",p);
+printf("total failed: %d",f);
     return 0;
 }
