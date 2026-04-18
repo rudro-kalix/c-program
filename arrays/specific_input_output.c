@@ -16,7 +16,7 @@ int main (){
 
         if (arr[i]>33){
 
-            printf("marks of sudent number %d is :%d ",i+1,arr[i]);
+            printf("Passed sudent number is %d and his mark:%d \n",i+1,arr[i]);
 
         }
 
