@@ -1,307 +1,157 @@
 # Complaint Management System
 
-This is project option 15 from the SE133 CEP list.
+This is a simple beginner-level C console project for a Complaint Management System.
 
-The project is a simple C console program. It helps users submit complaints and lets an admin check, search, update, delete, and separate complaints by status. The program saves all complaint records in a file named `complaints.dat`, so the data is not lost when the program closes.
-
-## Project Idea
-
-In real life, people may complain about water, electricity, road, internet, or other service problems. If these complaints are only written on paper, they can be lost or forgotten. This system keeps the complaints in one place.
-
-The system has two sides:
-
-- User side
-- Admin side
-
-The user can submit a complaint and later check the complaint status using the complaint ID. The admin can manage all complaints.
+The program lets a user submit a complaint and check its status. An admin can view all complaints, update complaint status, and view pending complaints.
 
 ## Main Features
 
-- User can file a new complaint.
-- Every complaint gets a unique complaint ID.
-- User can check complaint status by entering the ID.
-- Admin can add a complaint.
+- User can make a complaint.
+- User can check a complaint using the complaint ID.
+- Admin can log in using a password.
 - Admin can view all complaints.
-- Admin can search complaints.
 - Admin can update complaint status.
-- Admin can assign or change a team while updating status.
-- Admin can delete wrong or test complaints.
-- Admin can view only pending complaints.
-- Admin can view only solved complaints.
+- Admin can view pending complaints.
+- Complaint data is saved in a file, so it stays after closing the program.
 
-## How The System Works
+## Admin Password
 
-When the program starts, it first reads old complaint data from `complaints.dat`. If the file does not exist, the program starts with an empty list.
-
-Then the main menu appears:
-
-```text
-1. User
-2. Admin
-0. Exit
-```
-
-If someone chooses `User`, they can file a complaint or check complaint status.
-
-If someone chooses `Admin`, the program asks for the admin password. The password is:
+The default admin password is:
 
 ```text
 admin123
 ```
 
-After the correct password, the admin menu appears:
+The program stores this password in:
 
 ```text
-1. Add Complaint
-2. View All
-3. Search
-4. Update Status
-5. Delete
-6. Pending Complaints
-7. Solved Complaints
-0. Back
+admin.txt
 ```
 
-When a new complaint is added, the program gives it an ID automatically. The first complaint ID starts from `1001`. The next complaints become `1002`, `1003`, and so on.
+If `admin.txt` does not exist, the program creates it automatically.
 
-Each complaint stores:
-
-- Complaint ID
-- User name
-- Phone number
-- Category
-- Problem details
-- Status
-- Assigned team
-- Date
-
-New complaints start with this status:
+## Files Used
 
 ```text
-Pending
+complaints.dat
+admin.txt
 ```
 
-The team starts as:
+`complaints.dat` stores complaint records using binary file handling.
 
-```text
-Not assigned
-```
+`admin.txt` stores the admin password using text file handling.
 
-The admin can later change the status to:
+## C Concepts Used
 
-```text
-Pending
-In Progress
-Solved
-Rejected
-```
+### File Handling
 
-While updating the status, the admin can also assign a team, such as `Electric Team`, `Water Team`, or `Maintenance Team`.
-
-## Code Section Explanation
-
-This section explains the code in simple words.
-
-### Header Files
-
-At the top of the code, these header files are used:
+The project uses:
 
 ```c
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <time.h>
+fopen()
+fread()
+fwrite()
+fprintf()
+fscanf()
+fclose()
 ```
 
-Simple meaning:
+`complaints.dat` uses `fread()` and `fwrite()`.
 
-- `stdio.h` is used for input, output, and file work.
-- `stdlib.h` is used for functions like `atoi`.
-- `string.h` is used for string work like comparing and copying text.
-- `time.h` is used to save the current date with a complaint.
-
-### Constant Values
-
-The code uses:
-
-```c
-#define MAX 300
-#define NAME 60
-#define TEXT 220
-#define FILE_NAME "complaints.dat"
-```
-
-Simple meaning:
-
-- The system can store up to 300 complaints at one time.
-- Name and description text sizes are fixed.
-- All records are saved in `complaints.dat`.
+`admin.txt` uses `fprintf()` and `fscanf()`.
 
 ### Structure
 
-The main data structure is:
+The project uses a structure named `Complaint`.
 
 ```c
 typedef struct {
     int id;
-    char name[NAME];
+    char name[NAME_SIZE];
     char phone[30];
-    char cat[50];
-    char details[TEXT];
-    char status[25];
-    char team[50];
-    char date[20];
+    char category[40];
+    char details[TEXT_SIZE];
+    char status[20];
 } Complaint;
 ```
 
-This works like a form. One `Complaint` contains all information about one complaint. Instead of keeping ID, name, phone, and status separately, the structure keeps them together.
+This keeps all information about one complaint together.
 
-### Input Functions
+### Functions
 
-The code has helper functions for taking input.
-
-`readText()` takes text input from the user. It also checks that the user does not leave the field empty.
-
-`readNum()` takes number input. It keeps asking again if the user types something that is not a number.
-
-These functions make the program more stable and easier to use.
-
-### File Handling
-
-The program uses two important functions for file work:
+The program is divided into small functions, such as:
 
 ```c
-int load(Complaint list[])
-void save(Complaint list[], int n)
+addComplaint()
+checkComplaint()
+viewAllComplaints()
+updateStatus()
+viewPendingComplaints()
+userMenu()
+adminMenu()
 ```
 
-`load()` runs when the program starts. It opens `complaints.dat` and reads all old complaints into the program.
+This keeps the code easier to read.
 
-`save()` runs after adding, updating, or deleting complaints. It writes the latest complaint list into `complaints.dat`.
+### Control Flow And Validation
 
-This is why the records stay saved even after closing the program.
+The program uses:
 
-### ID Generation
+- `if` and `else`
+- `switch`
+- `while`
+- `do while`
 
-The function `nextId()` checks the current highest complaint ID and returns the next ID.
+It also checks:
 
-Example:
+- Empty text input
+- Wrong number input
+- Wrong admin password
+- Invalid complaint ID
+- Invalid menu choice
 
-- If there is no complaint, first ID is `1001`.
-- If the last ID is `1001`, next ID is `1002`.
-- If the last ID is `1002`, next ID is `1003`.
+### Arrays And Strings
 
-This prevents duplicate complaint IDs.
+The program stores complaints in an array:
 
-### Searching
-
-The function `find()` searches by complaint ID.
-
-The function `searchComplaint()` is used in the admin menu. It can search by:
-
-- ID
-- name
-- phone
-- category
-- status
-
-If a match is found, the complaint details are shown.
-
-### Showing Complaint Details
-
-The function `showOne()` prints one complaint in a clean format.
-
-It shows:
-
-- ID
-- name
-- phone
-- category
-- details
-- status
-- team
-- date
-
-The function `listAll()` uses `showOne()` repeatedly to show every complaint.
-
-### Adding Complaints
-
-The function `addComplaint()` adds a new complaint.
-
-It asks for:
-
-- name
-- phone
-- category
-- problem description
-
-Then the program automatically adds:
-
-- complaint ID
-- status as `Pending`
-- team as `Not assigned`
-- current date
-
-After that, it saves the complaint to the file.
-
-### Updating Status
-
-The function `setStatus()` is used by the admin.
-
-The admin enters a complaint ID. If the ID exists, the admin can choose a new status:
-
-```text
-1. Pending
-2. In Progress
-3. Solved
-4. Rejected
+```c
+Complaint *list;
 ```
 
-After choosing the status, the program asks whether the admin wants to assign or change the team. This covers the requirement of assigning resolution teams.
+The project also uses string functions:
 
-### Deleting Complaints
-
-The function `removeItem()` deletes a complaint using the complaint ID.
-
-If the ID is found, the program removes that record from the array and saves the updated list to the file.
-
-### Pending And Solved Lists
-
-The admin menu has:
-
-```text
-6. Pending Complaints
-7. Solved Complaints
+```c
+strlen()
+strcmp()
+strcpy()
 ```
 
-`Pending Complaints` shows only complaints with `Pending` status.
+### Pointers And Memory Management
 
-`Solved Complaints` shows only complaints with `Solved` status.
+The project uses a pointer for the complaint list:
 
-This helps the admin quickly understand which problems still need work and which problems are already finished.
+```c
+Complaint *list;
+```
 
-### Menus
+Memory is created using:
 
-The program has three main menu functions:
+```c
+malloc()
+```
 
-- `main()` shows the first menu.
-- `userMenu()` shows the user options.
-- `adminMenu()` shows the admin options.
+Memory is released using:
 
-The menus use `switch` statements. A `switch` checks the user's choice and runs the correct function.
+```c
+free()
+```
 
-## C Concepts Used
+The project also uses pointer parameters like:
 
-This project uses the required C concepts:
-
-- File handling: `fopen`, `fread`, `fwrite`, `fclose`
-- Structure: `Complaint`
-- Array of structures: `Complaint list[MAX]`
-- Functions: separate functions for input, file work, add, search, update, delete, and menus
-- Control flow: `if`, `else`, `switch`, loops
-- Validation: empty input checking, number input checking, password checking, ID checking
-- Strings: `strcmp`, `strcpy`, `strlen`
-- Pointers: `Complaint *c`, `int *n`, and array passing to functions
+```c
+int *count
+Complaint *c
+```
 
 ## How To Run
 
@@ -317,31 +167,16 @@ Run on Windows:
 complaint_system.exe
 ```
 
-Admin password:
+## Demo Flow
 
-```text
-admin123
-```
-
-## Short Class Demo Flow
-
-1. Start the program.
-2. Choose the user menu.
-3. File a complaint.
-4. Note the complaint ID.
-5. Check the complaint status using that ID.
-6. Go back and open the admin menu.
+1. Run the program.
+2. Choose `User`.
+3. Make a complaint.
+4. Remember the complaint ID.
+5. Check the complaint using that ID.
+6. Go back and choose `Admin`.
 7. Enter password `admin123`.
 8. View all complaints.
-9. Search the complaint by ID.
-10. Update the status to `Solved`.
-11. Assign a team when the program asks.
-12. Open solved complaints and show that the complaint is now solved.
-13. Exit the program.
-14. Run the program again and show that the data is still saved.
-
-## What To Say If Asked
-
-This project is a complaint tracking system. Users can submit complaints and check their complaint status. Admins can manage the complaints by adding, viewing, searching, updating, deleting, and checking pending or solved complaints. Every complaint is stored in a structure, and all records are saved in a file using C file handling.
-
-If the teacher asks about improvement, say that a future version could add separate user accounts, priority levels, CSV export, and a better password system.
+9. Update the complaint status to `Solved`.
+10. Exit the program.
+11. Run the program again and show that the data is still saved.
