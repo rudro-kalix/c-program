@@ -3,110 +3,124 @@
 #include <string.h>
 
 #define MAX 300
-#define NAME_SIZE 60
-#define TEXT_SIZE 200
-#define DATA_FILE "complaints.dat"
-#define PASS_FILE "admin.txt"
+#define NM 60
+#define TXT 200
+#define DATA "complaints.dat"
+#define PASS "admin.txt"
 
 typedef struct {
     int id;
-    char name[NAME_SIZE];
+    char name[NM];
     char phone[30];
-    char category[40];
-    char details[TEXT_SIZE];
-    char status[20];
+    char cat[40];
+    char info[TXT];
+    char stat[20];
 } Complaint;
 
-void removeNewLine(char text[]) {
-    int len = strlen(text);
-    if (len > 0 && text[len - 1] == '\n') {
-        text[len - 1] = '\0';
+void cutnl(char s[])
+{
+    int n = strlen(s);
+
+    if (n > 0 && s[n - 1] == '\n') {
+        s[n - 1] = '\0';
     }
 }
 
-void readText(char message[], char text[], int size) {
-    printf("%s", message);
-    fgets(text, size, stdin);
-    removeNewLine(text);
+void getstr(char msg[], char s[], int size)
+{
+    printf("%s", msg);
+    fgets(s, size, stdin);
+    cutnl(s);
 
-    while (strlen(text) == 0) {
-        printf("This cannot be empty. Enter again: ");
-        fgets(text, size, stdin);
-        removeNewLine(text);
+    while (strlen(s) == 0) {
+        printf("Enter again: ");
+        fgets(s, size, stdin);
+        cutnl(s);
     }
 }
 
-int readNumber(char message[]) {
-    char line[30];
-    int number;
+int getnum(char msg[])
+{
+    char s[30];
+    int x;
 
-    printf("%s", message);
-    fgets(line, sizeof(line), stdin);
+    printf("%s", msg);
+    fgets(s, sizeof(s), stdin);
 
-    while (sscanf(line, "%d", &number) != 1) {
-        printf("Please enter a number: ");
-        fgets(line, sizeof(line), stdin);
+    while (sscanf(s, "%d", &x) != 1) {
+        printf("Enter number: ");
+        fgets(s, sizeof(s), stdin);
     }
 
-    return number;
+    return x;
 }
 
-void pauseScreen() {
-    char temp[10];
-    printf("\nPress Enter to continue...");
-    fgets(temp, sizeof(temp), stdin);
+void wait()
+{
+    char s[5];
+
+    printf("\nPress Enter...");
+    fgets(s, sizeof(s), stdin);
 }
 
-int loadComplaints(Complaint list[]) {
-    FILE *file;
-    int count;
+int load(Complaint a[])
+{
+    FILE *fp;
+    int n;
 
-    file = fopen(DATA_FILE, "rb");
-    if (file == NULL) {
+    fp = fopen(DATA, "rb");
+    if (fp == NULL) {
         return 0;
     }
 
-    fread(&count, sizeof(int), 1, file);
-    if (count < 0 || count > MAX) {
-        fclose(file);
+    fread(&n, sizeof(int), 1, fp);
+
+    if (n < 0 || n > MAX) {
+        fclose(fp);
         return 0;
     }
 
-    fread(list, sizeof(Complaint), count, file);
-    fclose(file);
-    return count;
+    fread(a, sizeof(Complaint), n, fp);
+    fclose(fp);
+
+    return n;
 }
 
-void saveComplaints(Complaint list[], int count) {
-    FILE *file = fopen(DATA_FILE, "wb");
+void save(Complaint a[], int n)
+{
+    FILE *fp;
 
-    if (file == NULL) {
-        printf("Could not save file.\n");
+    fp = fopen(DATA, "wb");
+    if (fp == NULL) {
+        printf("File save failed.\n");
         return;
     }
 
-    fwrite(&count, sizeof(int), 1, file);
-    fwrite(list, sizeof(Complaint), count, file);
-    fclose(file);
+    fwrite(&n, sizeof(int), 1, fp);
+    fwrite(a, sizeof(Complaint), n, fp);
+    fclose(fp);
 }
 
-int getNextId(Complaint list[], int count) {
-    int i, lastId = 1000;
+int nextid(Complaint a[], int n)
+{
+    int i;
+    int big = 1000;
 
-    for (i = 0; i < count; i++) {
-        if (list[i].id > lastId) {
-            lastId = list[i].id;
+    for (i = 0; i < n; i++) {
+        if (a[i].id > big) {
+            big = a[i].id;
         }
     }
 
-    return lastId + 1;
+    return big + 1;
 }
 
-int findComplaint(Complaint list[], int count, int id) {
+int find(Complaint a[], int n, int id)
+{
     int i;
 
-    for (i = 0; i < count; i++) {
-        if (list[i].id == id) {
+    for (i = 0; i < n; i++) {
+        if (a[i].id == id) {
             return i;
         }
     }
@@ -114,134 +128,204 @@ int findComplaint(Complaint list[], int count, int id) {
     return -1;
 }
 
-void showComplaint(Complaint *c) {
-    printf("--------------------------------------------\n");
-    printf("ID       : %d\n", c->id);
-    printf("Name     : %s\n", c->name);
-    printf("Phone    : %s\n", c->phone);
-    printf("Category : %s\n", c->category);
-    printf("Details  : %s\n", c->details);
-    printf("Status   : %s\n", c->status);
+void show(Complaint *c)
+{
+    printf("\n-----------------------------\n");
+    printf("ID: %d\n", c->id);
+    printf("Name: %s\n", c->name);
+    printf("Phone: %s\n", c->phone);
+    printf("Category: %s\n", c->cat);
+    printf("Details: %s\n", c->info);
+    printf("Status: %s\n", c->stat);
 }
 
-void addComplaint(Complaint list[], int *count) {
+void add(Complaint a[], int *n)
+{
     Complaint c;
 
-    if (*count >= MAX) {
-        printf("Storage is full.\n");
+    if (*n >= MAX) {
+        printf("No space left.\n");
         return;
     }
 
-    c.id = getNextId(list, *count);
-    readText("Your name: ", c.name, NAME_SIZE);
-    readText("Phone number: ", c.phone, sizeof(c.phone));
-    readText("Category: ", c.category, sizeof(c.category));
-    readText("Problem details: ", c.details, TEXT_SIZE);
-    strcpy(c.status, "Pending");
+    c.id = nextid(a, *n);
 
-    list[*count] = c;
-    (*count)++;
-    saveComplaints(list, *count);
+    getstr("Name: ", c.name, NM);
+    getstr("Phone: ", c.phone, sizeof(c.phone));
+    getstr("Category: ", c.cat, sizeof(c.cat));
+    getstr("Problem details: ", c.info, TXT);
 
-    printf("\nComplaint saved successfully.\n");
-    printf("Your complaint ID is %d.\n", c.id);
+    strcpy(c.stat, "Pending");
+
+    a[*n] = c;
+    (*n)++;
+
+    save(a, *n);
+
+    printf("\nComplaint added.\n");
+    printf("Complaint ID: %d\n", c.id);
 }
 
-void checkComplaint(Complaint list[], int count) {
-    int id = readNumber("Enter complaint ID: ");
-    int position = findComplaint(list, count, id);
+void check(Complaint a[], int n)
+{
+    int id;
+    int p;
 
-    if (position == -1) {
-        printf("Complaint not found.\n");
+    id = getnum("Complaint ID: ");
+    p = find(a, n, id);
+
+    if (p == -1) {
+        printf("Not found.\n");
     } else {
-        showComplaint(&list[position]);
+        show(&a[p]);
     }
 }
 
-void viewAllComplaints(Complaint list[], int count) {
+void showall(Complaint a[], int n)
+{
     int i;
 
-    if (count == 0) {
-        printf("No complaints available.\n");
+    if (n == 0) {
+        printf("No complaint found.\n");
         return;
     }
 
-    for (i = 0; i < count; i++) {
-        showComplaint(&list[i]);
+    for (i = 0; i < n; i++) {
+        show(&a[i]);
     }
 }
 
-void updateStatus(Complaint list[], int count) {
-    int id = readNumber("Enter complaint ID: ");
-    int position = findComplaint(list, count, id);
-    int choice;
+void search(Complaint a[], int n)
+{
+    char key[60];
+    int i;
+    int id;
+    int ok = 0;
 
-    if (position == -1) {
-        printf("Complaint not found.\n");
+    getstr("Search: ", key, sizeof(key));
+    id = atoi(key);
+
+    for (i = 0; i < n; i++) {
+        if (a[i].id == id ||
+            strcmp(a[i].name, key) == 0 ||
+            strcmp(a[i].phone, key) == 0 ||
+            strcmp(a[i].cat, key) == 0 ||
+            strcmp(a[i].stat, key) == 0) {
+            show(&a[i]);
+            ok = 1;
+        }
+    }
+
+    if (ok == 0) {
+        printf("No match found.\n");
+    }
+}
+
+void status(Complaint a[], int n)
+{
+    int id;
+    int p;
+    int ch;
+
+    id = getnum("Complaint ID: ");
+    p = find(a, n, id);
+
+    if (p == -1) {
+        printf("Not found.\n");
         return;
     }
 
-    printf("\n1. Pending\n2. In Progress\n3. Solved\n4. Rejected\n");
-    choice = readNumber("Choose new status: ");
+    printf("\n1. Pending\n");
+    printf("2. In Progress\n");
+    printf("3. Solved\n");
+    printf("4. Rejected\n");
 
-    switch (choice) {
+    ch = getnum("Choice: ");
+
+    switch (ch) {
         case 1:
-            strcpy(list[position].status, "Pending");
+            strcpy(a[p].stat, "Pending");
             break;
         case 2:
-            strcpy(list[position].status, "In Progress");
+            strcpy(a[p].stat, "In Progress");
             break;
         case 3:
-            strcpy(list[position].status, "Solved");
+            strcpy(a[p].stat, "Solved");
             break;
         case 4:
-            strcpy(list[position].status, "Rejected");
+            strcpy(a[p].stat, "Rejected");
             break;
         default:
-            printf("Invalid choice.\n");
+            printf("Wrong choice.\n");
             return;
     }
 
-    saveComplaints(list, count);
-    printf("Status updated.\n");
+    save(a, n);
+    printf("Status changed.\n");
 }
 
-void viewPendingComplaints(Complaint list[], int count) {
-    int i, found = 0;
+void del(Complaint a[], int *n)
+{
+    int id;
+    int p;
+    int i;
 
-    for (i = 0; i < count; i++) {
-        if (strcmp(list[i].status, "Pending") == 0) {
-            showComplaint(&list[i]);
-            found = 1;
+    id = getnum("Delete ID: ");
+    p = find(a, *n, id);
+
+    if (p == -1) {
+        printf("Not found.\n");
+        return;
+    }
+
+    for (i = p; i < *n - 1; i++) {
+        a[i] = a[i + 1];
+    }
+
+    (*n)--;
+    save(a, *n);
+    printf("Deleted.\n");
+}
+
+void showstat(Complaint a[], int n, char st[])
+{
+    int i;
+    int ok = 0;
+
+    for (i = 0; i < n; i++) {
+        if (strcmp(a[i].stat, st) == 0) {
+            show(&a[i]);
+            ok = 1;
         }
     }
 
-    if (found == 0) {
-        printf("No pending complaints.\n");
+    if (ok == 0) {
+        printf("No %s complaint found.\n", st);
     }
 }
 
-int adminLogin() {
-    FILE *file;
-    char savedPassword[30] = "admin123";
-    char typedPassword[30];
+int login()
+{
+    FILE *fp;
+    char pass[30] = "admin123";
+    char in[30];
 
-    file = fopen(PASS_FILE, "r");
+    fp = fopen(PASS, "r");
 
-    if (file == NULL) {
-        file = fopen(PASS_FILE, "w");
-        if (file != NULL) {
-            fprintf(file, "admin123\n");
-            fclose(file);
+    if (fp == NULL) {
+        fp = fopen(PASS, "w");
+        if (fp != NULL) {
+            fprintf(fp, "admin123\n");
+            fclose(fp);
         }
     } else {
-        fscanf(file, "%29s", savedPassword);
-        fclose(file);
+        fscanf(fp, "%29s", pass);
+        fclose(fp);
     }
 
-    readText("Admin password: ", typedPassword, sizeof(typedPassword));
+    getstr("Admin password: ", in, sizeof(in));
 
-    if (strcmp(typedPassword, savedPassword) == 0) {
+    if (strcmp(in, pass) == 0) {
         return 1;
     }
 
@@ -249,99 +333,134 @@ int adminLogin() {
     return 0;
 }
 
-void userMenu(Complaint list[], int *count) {
-    int choice;
+void usermenu(Complaint a[], int *n)
+{
+    int ch;
 
     do {
         printf("\nUser Menu\n");
-        printf("1. Make complaint\n2. Check complaint\n0. Back\n");
-        choice = readNumber("Choice: ");
+        printf("1. Add Complaint\n");
+        printf("2. Check Status\n");
+        printf("0. Back\n");
 
-        switch (choice) {
+        ch = getnum("Choice: ");
+
+        switch (ch) {
             case 1:
-                addComplaint(list, count);
-                pauseScreen();
+                add(a, n);
+                wait();
                 break;
             case 2:
-                checkComplaint(list, *count);
-                pauseScreen();
+                check(a, *n);
+                wait();
                 break;
             case 0:
                 break;
             default:
-                printf("Invalid choice.\n");
-                pauseScreen();
+                printf("Wrong choice.\n");
+                wait();
         }
-    } while (choice != 0);
+    } while (ch != 0);
 }
 
-void adminMenu(Complaint list[], int *count) {
-    int choice;
+void adminmenu(Complaint a[], int *n)
+{
+    int ch;
 
-    if (adminLogin() == 0) {
+    if (login() == 0) {
         return;
     }
 
     do {
         printf("\nAdmin Menu\n");
-        printf("1. View all\n2. Update status\n3. View pending\n0. Back\n");
-        choice = readNumber("Choice: ");
+        printf("1. Add Complaint\n");
+        printf("2. View All\n");
+        printf("3. Search\n");
+        printf("4. Update Status\n");
+        printf("5. Delete\n");
+        printf("6. Pending Complaints\n");
+        printf("7. Solved Complaints\n");
+        printf("0. Back\n");
 
-        switch (choice) {
+        ch = getnum("Choice: ");
+
+        switch (ch) {
             case 1:
-                viewAllComplaints(list, *count);
-                pauseScreen();
+                add(a, n);
+                wait();
                 break;
             case 2:
-                updateStatus(list, *count);
-                pauseScreen();
+                showall(a, *n);
+                wait();
                 break;
             case 3:
-                viewPendingComplaints(list, *count);
-                pauseScreen();
+                search(a, *n);
+                wait();
+                break;
+            case 4:
+                status(a, *n);
+                wait();
+                break;
+            case 5:
+                del(a, n);
+                wait();
+                break;
+            case 6:
+                showstat(a, *n, "Pending");
+                wait();
+                break;
+            case 7:
+                showstat(a, *n, "Solved");
+                wait();
                 break;
             case 0:
                 break;
             default:
-                printf("Invalid choice.\n");
-                pauseScreen();
+                printf("Wrong choice.\n");
+                wait();
         }
-    } while (choice != 0);
+    } while (ch != 0);
 }
 
-int main() {
-    Complaint *list;
-    int count, choice;
+int main()
+{
+    Complaint *a;
+    int n;
+    int ch;
 
-    list = (Complaint *) malloc(MAX * sizeof(Complaint));
-    if (list == NULL) {
-        printf("Memory problem. Program cannot start.\n");
+    a = (Complaint *) malloc(MAX * sizeof(Complaint));
+
+    if (a == NULL) {
+        printf("Memory error.\n");
         return 1;
     }
 
-    count = loadComplaints(list);
+    n = load(a);
 
     do {
         printf("\nComplaint Management System\n");
-        printf("1. User\n2. Admin\n0. Exit\n");
-        choice = readNumber("Choice: ");
+        printf("1. User\n");
+        printf("2. Admin\n");
+        printf("0. Exit\n");
 
-        switch (choice) {
+        ch = getnum("Choice: ");
+
+        switch (ch) {
             case 1:
-                userMenu(list, &count);
+                usermenu(a, &n);
                 break;
             case 2:
-                adminMenu(list, &count);
+                adminmenu(a, &n);
                 break;
             case 0:
-                saveComplaints(list, count);
-                printf("Data saved. Goodbye.\n");
+                save(a, n);
+                printf("Saved. Bye.\n");
                 break;
             default:
-                printf("Invalid choice.\n");
+                printf("Wrong choice.\n");
         }
-    } while (choice != 0);
+    } while (ch != 0);
 
-    free(list);
+    free(a);
     return 0;
 }

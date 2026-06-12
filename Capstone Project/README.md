@@ -1,51 +1,55 @@
 # Complaint Management System
 
-This is a simple beginner-level C console project for a Complaint Management System.
+This is a simple C console project. It stores complaints in a file and lets an admin manage them.
 
-The program lets a user submit a complaint and check its status. An admin can view all complaints, update complaint status, and view pending complaints.
+## Main Work
 
-## Main Features
+User can:
 
-- User can make a complaint.
-- User can check a complaint using the complaint ID.
-- Admin can log in using a password.
-- Admin can view all complaints.
-- Admin can update complaint status.
-- Admin can view pending complaints.
-- Complaint data is saved in a file, so it stays after closing the program.
+- Add Complaint
+- Check Status
+
+Admin can:
+
+- Add Complaint
+- View All
+- Search
+- Update Status
+- Delete
+- Pending Complaints
+- Solved Complaints
 
 ## Admin Password
 
-The default admin password is:
+Default password:
 
 ```text
 admin123
 ```
 
-The program stores this password in:
+The password is saved in:
 
 ```text
 admin.txt
 ```
 
-If `admin.txt` does not exist, the program creates it automatically.
+If the file is missing, the program creates it.
 
-## Files Used
+## Data File
+
+Complaints are saved in:
 
 ```text
 complaints.dat
-admin.txt
 ```
 
-`complaints.dat` stores complaint records using binary file handling.
+So the data stays after closing the program.
 
-`admin.txt` stores the admin password using text file handling.
-
-## C Concepts Used
+## C Rules Used
 
 ### File Handling
 
-The project uses:
+The program uses:
 
 ```c
 fopen()
@@ -56,69 +60,60 @@ fscanf()
 fclose()
 ```
 
-`complaints.dat` uses `fread()` and `fwrite()`.
+`complaints.dat` uses binary file work with `fread()` and `fwrite()`.
 
-`admin.txt` uses `fprintf()` and `fscanf()`.
+`admin.txt` uses text file work with `fprintf()` and `fscanf()`.
 
 ### Structure
 
-The project uses a structure named `Complaint`.
+One complaint is stored using a structure:
 
 ```c
 typedef struct {
     int id;
-    char name[NAME_SIZE];
+    char name[NM];
     char phone[30];
-    char category[40];
-    char details[TEXT_SIZE];
-    char status[20];
+    char cat[40];
+    char info[TXT];
+    char stat[20];
 } Complaint;
 ```
 
-This keeps all information about one complaint together.
-
 ### Functions
 
-The program is divided into small functions, such as:
+The code is not written only inside `main()`. It has small functions like:
 
 ```c
-addComplaint()
-checkComplaint()
-viewAllComplaints()
-updateStatus()
-viewPendingComplaints()
-userMenu()
-adminMenu()
+add()
+check()
+search()
+status()
+del()
+showstat()
+usermenu()
+adminmenu()
 ```
-
-This keeps the code easier to read.
 
 ### Control Flow And Validation
 
 The program uses:
 
-- `if` and `else`
+- `if`
 - `switch`
 - `while`
 - `do while`
 
-It also checks:
-
-- Empty text input
-- Wrong number input
-- Wrong admin password
-- Invalid complaint ID
-- Invalid menu choice
+It checks wrong menu choices, empty text, wrong number input, wrong password, and wrong complaint ID.
 
 ### Arrays And Strings
 
-The program stores complaints in an array:
+The complaint list works like an array:
 
 ```c
-Complaint *list;
+Complaint *a;
 ```
 
-The project also uses string functions:
+The program uses string functions:
 
 ```c
 strlen()
@@ -126,34 +121,28 @@ strcmp()
 strcpy()
 ```
 
-### Pointers And Memory Management
+### Pointers And Memory
 
-The project uses a pointer for the complaint list:
-
-```c
-Complaint *list;
-```
-
-Memory is created using:
+The list is created with:
 
 ```c
 malloc()
 ```
 
-Memory is released using:
+And released with:
 
 ```c
 free()
 ```
 
-The project also uses pointer parameters like:
+The code also uses pointer parameters:
 
 ```c
-int *count
+int *n
 Complaint *c
 ```
 
-## How To Run
+## Run
 
 Compile:
 
@@ -161,22 +150,22 @@ Compile:
 gcc complaint_system.c -o complaint_system
 ```
 
-Run on Windows:
+Run:
 
 ```bash
 complaint_system.exe
 ```
 
-## Demo Flow
+## Demo
 
 1. Run the program.
-2. Choose `User`.
-3. Make a complaint.
+2. Choose User.
+3. Add a complaint.
 4. Remember the complaint ID.
-5. Check the complaint using that ID.
-6. Go back and choose `Admin`.
-7. Enter password `admin123`.
-8. View all complaints.
-9. Update the complaint status to `Solved`.
-10. Exit the program.
-11. Run the program again and show that the data is still saved.
+5. Check status using the ID.
+6. Go back and choose Admin.
+7. Enter `admin123`.
+8. Search or view the complaint.
+9. Update status to Solved.
+10. Open Solved Complaints.
+11. Exit and run again to show that data is saved.
